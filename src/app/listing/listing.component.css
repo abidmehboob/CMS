@@ -1,0 +1,10 @@
+.datatable-footer .datatable-pager .pager li {
+    padding: 4px !important;
+    margin: 2px!important;
+    display: inline-block;
+    list-style: none;
+}
+
+.pager li {
+    padding: 4px im !important;
+}

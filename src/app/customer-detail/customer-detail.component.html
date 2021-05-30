@@ -1,0 +1,176 @@
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <app-sidebar></app-sidebar>
+        <div class="pcoded-content bg-white">
+            <div class="pcoded-inner-content">
+                <!-- Main-body start -->
+                <div class="main-body">
+                    <div class="page-wrapper pb-0">
+                        <!-- Page-header start -->
+                        <div class="page-header card bg-transparent box-shadow-none">
+                            <div class="row align-items-end">
+                                <div class="col-lg-8">
+                                    <div class="page-header-title">
+                                        <div class="d-inline">
+                                            <h4 class="mt-3">Customers <span class="dot"></span> <small
+                                                    class="dot-number">{{this.rows ? this.rows.length : ""}}
+                                                </small></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Page-header end -->
+
+                    <!-- Page-body start -->
+
+                    <div class="page-wrapper pt-0">
+                        <!-- Basic table card start -->
+                        <input type="text" class="form-control col-lg-4 "
+                            placeholder="Type to filter the name column..." (keyup)="updateFilter($event)" />
+                        <p>&nbsp; </p>
+                        <div class="card">
+                            <div class="card-block table-border-style p-3 pt-4">
+                                <div class="table-responsive">
+                                    <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "default" color = "#fff" type = "ball-beat" [fullScreen] = "false"><p style="color: white;"> Loading... </p></ngx-spinner>                                    
+
+                                    <ngx-datatable #myTable class="dark" [rows]="rows" [columnMode]="'force'"
+                                        [headerHeight]="50" [footerHeight]="50" [rowHeight]="120" [scrollbarH]="true"
+                                        [sorts]="[{prop: 'name', dir: 'desc'},{prop: 'email', dir: 'desc'}]">
+
+                                        <ngx-datatable-column name="Name">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.firstName}} {{row.lastName}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Email">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.email}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Address">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.address1}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Country">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.country}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="State">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.state}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="City">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.city}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Phone Number">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.phonePrefix}} {{row.phoneNumber}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Action">
+                                            <ng-template let-row="row" let-rowIndex="rowIndex"
+                                                ngx-datatable-cell-template>
+                                                <a href="" class="action-btn"
+                                                    [routerLink]="['/customer',row._id]"><i class="fa fa-edit"></i></a>
+                                                &nbsp;
+                                                <a class="action-btn" [routerLink]="[]" (click)="deleteForm(row._id)"
+                                                    data-toggle="modal" data-target="#deleteModal"><i
+                                                        class="fa fa-trash"></i></a>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+
+                                    <!-- Basic table card end -->
+                                </div>
+                                <!-- Page-body end -->
+                            </div>
+                        </div>
+                        <!-- Main-body end -->
+
+                        <div id="styleSelector">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="deleteModal" class="modal fade">
+                <div class="modal-dialog modal-confirm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Are you sure?</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Do you really want to delete these records? This process cannot be undone.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger" (click)="deleteCustomer()">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="modal fade" id="editModal" role="dialog" aria-modal="true">
+                <div class="modal-dialog modal-lg">
+
+                    Modal content
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title text-center">Edit Customer</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group row">
+                                <div class="col-lg-6">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" name="firstNameE" id="firstNameE"
+                                        [(ngModel)]="firstNameE">
+                                </div>
+                                <div class="col-lg-6">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" name="lastNameE" id="lastNameE"
+                                        [(ngModel)]="lastNameE">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" class="form-control" name="emailE" id="emailE" [(ngModel)]="emailE">
+                            </div>
+                            <div class="form-group">
+                                <label>Mobile Number</label>
+                                <input type="text" class="form-control" name="phoneNumberE" id="phoneNumberE"
+                                    [(ngModel)]="phoneNumberE">
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    Profile Picture
+                                </label>
+                                <div class="form-group " *ngIf="!previewUrlE">
+                                    <input class="form-c" type="file" name="imageE" (change)="fileProgress($event)" />
+                                </div>
+                                <div *ngIf="fileUploadProgress">
+                                    Upload progress: {{ fileUploadProgress }}
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 mt-3" *ngIf="previewUrlE">
+                                    <img [src]="previewUrlE" height="80" /> &nbsp; &nbsp;
+                                    <span (click)="removeImg()" style="color:orange">Change image</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-warning"
+                                (click)="onSubmitEdit()">Submit</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->

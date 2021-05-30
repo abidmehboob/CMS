@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+input:checked + .slider {
+  background: #38325d !important ;
+}
+
+.btn-warning:focus,
+.btn-warning:active {
+  box-shadow: none;
+  color: #fff;
+  background-color: #38325d3d !important ;
+}
+
+.btn-outline-warning {
+  color: #eeb13b !important ;
+  border-color: #eeb13b !important ;
+}
+
+.pager li {
+  padding: 4px !important;
+}
+/*
+li .active {
+    background-color: #b6c5b6 !important;
+}
+*/
+.active {
+  background-color: #b6c5b6 !important;
+}
+
+.spinner-border {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  -webkit-animation: spinner-border 0.75s linear infinite;
+  animation: spinner-border 0.75s linear infinite;
+}

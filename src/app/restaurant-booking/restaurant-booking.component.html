@@ -1,0 +1,127 @@
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <app-sidebar></app-sidebar>
+        <div class="pcoded-content bg-white"  style="background-image: url({{imgBase+bgImg}})" >
+            <div class="pcoded-inner-content">
+                <!-- Main-body start -->
+                <div class="main-body">
+                    <div class="page-wrapper pb-0">
+                        <!-- Page-header start -->
+                        <div class="page-header card bg-transparent box-shadow-none">
+                            <div class="row align-items-end">
+                                <div class="col-lg-8">
+                                    <div class="page-header-title">
+                                        <div class="d-inline">
+                                            <h4 class="mt-3">Manage Restaurant Booking  <span class="dot"></span> <small
+                                                    class="dot-number">{{this.rows ? this.rows.length : ""}}
+                                                </small>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Page-header end -->
+                    <!-- Page-body start -->
+                    <div class="page-wrapper pt-0">
+                        <!-- Basic table card start -->
+                        <input type="text" class="form-control col-lg-4 "
+                            placeholder="Type to filter the name column..." (keyup)="updateFilter($event)" />
+                        <p>&nbsp; </p>
+                        <div class="card">
+                            <div class="card-block table-border-style p-3 pt-4">
+                                <div class="table-responsive">
+                                    <ngx-datatable #myTable class="dark" [rows]="rows" [columnMode]="'force'"
+                                        [headerHeight]="80" [footerHeight]="50" [rowHeight]="120" [scrollbarH]="true"
+                                        [sorts]="[{prop: 'listingTitle', dir: 'desc'}]">
+                                        
+                                        <ngx-datatable-column name="Restaurant Name">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.hotel?.name}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        
+                                        
+                                        <ngx-datatable-column name="Booking Status">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.booking_status}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Customer Name">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.customer?.name}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Booking Date">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.customer?.hotelBooking?.dateCreated}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        
+                                        
+                                        <ngx-datatable-column name="Total Rent">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.customer?.hotelBooking?.totalRent}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Action">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+
+                                                <ng-container  *ngIf="row.booking_status === 'ACCEPTED' && managerType === 1" >
+                                                        <button  (click)="actionPerform('REJECTED',row.hotel_booking_id)" class="btn-sm btn btn-error" >REJECT</button>
+                                                </ng-container>
+                                                <ng-container  *ngIf="managerType === 2" >
+                                                    <ng-container *ngIf="row.booking_status === 'PENDING'" >
+                                                            <button  (click)="actionPerform('ACCEPTED',row.hotel_booking_id)" class="btn-sm btn btn-success" >ACCEPT</button>
+        
+                                                    </ng-container>
+                                                    <ng-container *ngIf="row.booking_status === 'ACCEPTED'" >
+                                                            <button  (click)="actionPerform('REJECTED',row.hotel_booking_id)" class="btn-sm btn btn-warning" >REJECT</button>
+                                                            &nbsp;
+                                                            <button  (click)="actionPerform('COMPLETED',row.hotel_booking_id)" class="btn-sm btn btn-success" >COMPLETE</button>
+            
+                                                    </ng-container>
+    
+                                                </ng-container>
+                                                </ng-template>
+                                                
+                                        </ngx-datatable-column>
+
+                                    </ngx-datatable>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Basic table card end -->
+                    </div>
+                    <!-- Page-body end -->
+                </div>
+            </div>
+            <!-- Main-body end -->
+
+            <div id="styleSelector">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Are you sure?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Do you really want to delete these records? This process cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" >Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

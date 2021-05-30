@@ -1,0 +1,182 @@
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <app-sidebar></app-sidebar>
+        <div class="pcoded-content bg-white"  style="background-image: url({{imgBase+bgImg}})" >            <div class="pcoded-inner-content">
+                <div class="main-body">
+                    <div class="page-wrapper">
+
+                        <div class="page-body">
+                            <div class="row row-eq-height">
+                                <!-- card1 start -->
+                                <div class="col-md-6 col-xl-3">
+                                    <div class="card widget-card-1">
+                                        <div class="card-block-small">
+                                            <i class="icofont icofont-users bg-c-blue card1-icon"></i>
+                                            <span class="text-c-blue f-w-600">Total Users</span>
+                                            <h4>{{this.totalCustomers}}</h4>
+                                            <div>
+                                                <span class="f-left m-t-10 text-muted">
+                                                    <!-- <img src="../../assets/images/icon-dine-in.webp" class="dine-in-icon">Last 28 days -->
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- card1 end -->
+                                <!-- card1 start -->
+                                <div class="col-md-6 col-xl-3">
+                                    <div class="card widget-card-1">
+                                        <div class="card-block-small">
+                                            <i class="icofont icofont-listing-number bg-c-orange card1-icon"></i>
+                                            <span class="text-c-orange f-w-600">Total Listings</span>
+                                            <h4>{{totalListings}}</h4>
+                                            <div>
+                                                <span class="f-left m-t-10 text-muted">
+                                                    <!-- <img src="../../assets/images/icon-dine-in.webp" class="dine-in-icon">Last 28 days -->
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- card1 end -->
+                                <!-- card1 start -->
+                                <div class="col-md-6 col-xl-3">
+                                    <div class="card widget-card-1">
+                                        <div class="card-block-small">
+                                            <i class="icofont icofont-list bg-c-yellow card1-icon"></i>
+                                            <span class="text-c-yellow f-w-600">Total Sales</span>
+                                            <h4>{{totalSubscriptions}}</h4>
+                                            <div>
+                                                <span class="f-left m-t-10 text-muted">
+                                                    <!-- <img src="../../assets/images/icon-dine-in.webp" class="dine-in-icon">Last 28 days -->
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- card1 end -->
+                                <!-- card1 start -->
+                                <div class="col-md-6 col-xl-3">
+                                    <div class="card widget-card-1">
+                                        <div class="card-block-small">
+                                            <i class="icofont icofont-ui-check bg-c-green card1-icon"></i>
+                                            <span class="text-c-green f-w-600">Total Events</span>
+                                            <h4>{{totalEvents}}</h4>
+                                            <div>
+                                                <span class="f-left m-t-10 text-muted">
+                                                    <!-- <img src="../../assets/images/icon-dine-in.webp" class="dine-in-icon">Last 24 hours  -->
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- card1 end -->
+                                <!-- Statestics Start -->
+                                
+                                <!-- Email Sent End -->
+                                <!-- Data widget start -->
+                                <div class="col-md-12 col-xl-4">
+                                    <div class="card widget-statstic-card h-100 mb-0">
+                                        <div class="card-header">
+                                            <div class="card-header-left">
+                                                <h4 class="f-w-600">Registrations Today</h4>
+                                                <p class="p-t-10 m-b-0 text-c-blue">Compared to last week</p>
+                                            </div>
+                                        </div>
+                                        <div class="card-block">
+                                            <i class="icofont icofont-refresh st-icon bg-c-blue"></i>
+                                            <div class="text-left">
+                                                <h3 class="d-inline-block">{{registrationsToday}}</h3>
+                                                <i class="icofont icofont-long-arrow-up f-30 text-c-green"></i>
+                                                <span class="f-right">23%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xl-4">
+                                    <div class="card widget-statstic-card h-100 mb-0">
+                                        <div class="card-header">
+                                            <div class="card-header-left">
+                                                <h4 class="f-w-600">Listings Posted Today</h4>
+                                                <p class="p-t-10 m-b-0 text-c-orange">Compared to last week</p>
+                                            </div>
+                                        </div>
+                                        <div class="card-block">
+                                            <i class="icofont icofont-ui-close st-icon bg-c-orange"></i>
+                                            <div class="text-left">
+                                                <h3 class="d-inline-block">{{listingsToday}}</h3>
+                                                <i class="icofont icofont-long-arrow-up f-30 text-c-orange"></i>
+                                                <span class="f-right">0%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xl-4">
+                                    <div class="card widget-statstic-card h-100 mb-0">
+                                        <div class="card-header">
+                                            <div class="card-header-left">
+                                                <h4 class="f-w-600">Total Earnings  <br> Today</h4>
+                                                <p class="p-t-10 m-b-0 text-c-yellow">Compared to last week</p>
+                                            </div>
+                                        </div>
+                                        <div class="card-block">
+                                            <i class="icofont icofont-money st-icon bg-c-yellow"></i>
+                                            <div class="text-left">
+                                                <h3 class="d-inline-block">0</h3>
+                                                <i class="icofont icofont-long-arrow-up f-30 text-c-green"></i>
+                                                <span class="f-right">23%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row row-eq-height">                                  
+                                <div class="col-md-12 col-xl-6">
+                                    <div class="card widget-statstic-card h-100 mt-4  mb-0">
+                                        <div class="card-header">
+                                            <div class="card-header-left">
+                                                <h4 class="f-w-600">Total Signups </h4>
+                                                <p class="p-t-10 m-b-0 text-c-blue">Compared to last week</p>
+                                            </div>
+                                        </div>
+                                        <div class="card-block">
+                                            <i class="icofont icofont-restaurant-menu st-icon bg-c-blue"></i>
+                                            <div class="text-left">
+                                                <h3 class="d-inline-block">{{totalSignups}}</h3>
+                                                <i class="icofont icofont-long-arrow-up f-30 text-c-green"></i>
+                                                <span class="f-right">50%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div class="col-md-12 col-xl-6">
+                                    <div class="card widget-statstic-card h-100 mt-4  mb-0">
+                                        <div class="card-header">
+                                            <div class="card-header-left">
+                                                <h4 class="f-w-600">Total Earnings</h4>
+                                                <p class="p-t-10 m-b-0 text-c-green"></p>
+                                            </div>
+                                        </div>
+                                        <div class="card-block">
+                                            <i class="icofont icofont-money st-icon bg-c-green"></i>
+                                            <div class="text-left">
+                                                <h3 class="d-inline-block">0</h3>
+                                                <i class="icofont icofont-long-arrow-up f-30 text-c-green"></i>
+                                                <span class="f-right">0%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                                                                                                              
+                            </div>
+                        </div>
+
+                        <div id="styleSelector">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

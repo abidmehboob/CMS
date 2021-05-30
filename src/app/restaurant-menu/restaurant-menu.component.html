@@ -1,0 +1,236 @@
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <app-sidebar></app-sidebar>
+        <div class="pcoded-content bg-white">
+            <div class="pcoded-inner-content">
+                <!-- Main-body start -->
+                <div class="main-body">
+                    <div class="page-wrapper pb-0">
+                        <!-- Page-header start -->
+                        <div class="page-header card bg-transparent box-shadow-none">
+                            <div class="row align-items-end">
+                                <div class="col-lg-8">
+                                    <div class="page-header-title">
+                                        <div class="d-inline">
+                                            <h4 class="mt-3">{{resName}} Menu <span class="dot"></span> <small
+                                                    class="dot-number">{{this.rows ? this.rows.length : ""}}
+                                                </small></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Page-header end -->
+                    <!-- Page-body start -->
+                    <div class="page-wrapper pt-0">
+                        <!-- Basic table card start -->
+                        <input type="text" class="form-control col-lg-4 "
+                            placeholder="Type to filter the name column..." (keyup)="updateFilter($event)" />
+                        <p>&nbsp; </p>
+                        <div class="card">
+                            <div class="card-block table-border-style p-3 pt-4">
+                                <div class="table-responsive">
+                                    <ngx-datatable #myTable class="dark" [rows]="rows" [columnMode]="'force'"
+                                        [headerHeight]="50" [footerHeight]="50" [rowHeight]="120" [scrollbarH]="true"
+                                        [sorts]="[{prop: 'name', dir: 'desc'},{prop: 'shortDesc', dir: 'desc'}]">
+                                        <ngx-datatable-column name="Image">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <img src="{{imageUrl+row.image}}" height="100px" width="100px" />
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Name">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.name}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Short Description">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.shortDesc}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Price">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.price}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Category Name">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.categoryId.name}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Status">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <label class="switch">
+                                                    <input type="checkbox" [checked]="row.status==='active'"
+                                                        (change)="changeStatus(row._id, $event)">
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Available">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.isAvailable ? "yes" : "no"}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Variation">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <a href="javascript:;"><i class="fa fa-desktop" aria-hidden="true"></i>
+                                                </a>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Action">
+                                            <ng-template let-row="row" let-rowIndex="rowIndex"
+                                                ngx-datatable-cell-template>
+                                                <a href="" class="action-btn" [routerLink]="[]"
+                                                    (click)="editForm(row._id, rowIndex)" data-toggle="modal"
+                                                    data-target="#editModal"><i class="fa fa-edit"></i></a>
+                                                &nbsp;
+                                                <a class="action-btn" [routerLink]="[]" (click)="deleteForm(row._id)"
+                                                    data-toggle="modal" data-target="#deleteModal"><i
+                                                        class="fa fa-trash"></i></a>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+                                    <!-- <table class="table table-custom">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Image</th>
+                                                <th>Short Desc</th>
+                                                <th>Default Price</th>
+                                                <th>Category</th>
+                                                <th>Status</th>
+                                                <th>Available</th>
+                                                <th>Variation</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let menu of this.menus;index as i;">
+                                                <td>{{menu.name}}</td>
+                                                <td><img src="{{imageUrl+menu.image}}" height="100px" width="100px" />
+                                                </td>
+                                                <td>{{menu.shortDesc}}</td>
+                                                <td>{{menu.price}}</td>
+                                                <td>{{menu.categoryId.name}}</td>
+                                                <td>
+                                                    <label class="switch">
+                                                        <input type="checkbox" [checked]="menu.status==='active'"
+                                                            (change)="changeStatus(menu._id, $event)">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </td>
+                                                <td>{{menu.isAvailable ? "yes" : "no"}}</td>
+                                                <td><a href="javascript:;"><i class="fa fa-desktop"
+                                                            aria-hidden="true"></i>
+                                                    </a></td>
+                                                <td>
+                                                    <a href="javascript:;" class="action-btn"data-toggle="modal"
+                                                        data-target="#editModal" (click)="editForm(menu._id,i)"><i
+                                                        class="fa fa-edit"></i></a>
+                                                    &nbsp;
+                                                    <a [routerLink]="[]" data-toggle="modal"
+                                                        data-target="#deleteModal" (click)="deleteForm(menu._id)"
+                                                        class="action-btn"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="!menus.length">
+                                                <td colspan="10" class="text-center">No record found</td>
+                                            </tr>
+                                        </tbody>
+                                    </table> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Basic table card end -->
+                    </div>
+                    <!-- Page-body end -->
+                </div>
+            </div>
+            <!-- Main-body end -->
+
+            <div id="styleSelector">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="deleteModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Are you sure?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Do you really want to delete these records? This process cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" (click)="deleteMenu()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center">Edit Menu</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>
+                        Select Category
+                    </label>
+                    <select id="categoryIdE" name="categoryIdE" [(ngModel)]="categoryIdE" class="form-control form-c">
+                        <option value="null">
+                            Select Category
+                        </option>
+                        <ng-container *ngFor="let cat of categories">
+                            <option value="{{cat._id}}">{{cat.name}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>
+                        Item Image
+                    </label>
+                    <div class="form-group " *ngIf="!previewUrlE">
+                        <input class="form-c" type="file" name="imageE" (change)="fileProgress($event)" />
+                    </div>
+                    <div *ngIf="fileUploadProgress">
+                        Upload progress: {{ fileUploadProgress }}
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 mt-3" *ngIf="previewUrlE">
+                        <img [src]="previewUrlE" height="80" /> &nbsp; &nbsp;
+                        <span (click)="removeImg()" style="color:orange">Change image</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Item Name</label>
+                    <input type="text" class="form-control" name="itemNameE" id="itemNameE" [(ngModel)]="itemNameE">
+                </div>
+                <div class="form-group">
+                    <label>Short Desc</label>
+                    <input type="shortDescE" class="form-control" name="shortDescE" id="shortDescE"
+                        [(ngModel)]="shortDescE">
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="priceE" class="form-control" name="priceE" id="priceE" [(ngModel)]="priceE">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-warning" (click)="onSubmitEdit()">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

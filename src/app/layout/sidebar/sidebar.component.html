@@ -1,0 +1,157 @@
+<nav class="pcoded-navbar" navbar-theme="themelight1" active-item-theme="theme4" sub-item-theme="theme2" active-item-style="style0" pcoded-navbar-position="fixed">
+    <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
+    <div class="pcoded-inner-navbar main-menu">
+
+        <div class="pcoded-navigatio-lavel" data-i18n="nav.category.navigation"></div>
+        <ul class="pcoded-item pcoded-left-item">
+            <li *ngIf="permissions.dashboard" [routerLinkActive]="['active']">
+                <a  href="javascript:;"  routerLink="/dashboard">
+                    <span class="pcoded-micon"><i class="ti-dashboard"></i><b>D</b></span>
+                    <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+                </li>
+
+            <li *ngIf="permissions.subadmins" [routerLinkActive]="['active']">
+                <a  href="javascript:;"  routerLink="/employees">
+                    <span class="pcoded-micon"><i class="ti-user"></i><b>M</b></span>
+                    <span class="pcoded-mtext" data-i18n="nav.dash.main">Manage Employee</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li> 
+            <li  *ngIf="permissions.allhotel"  [routerLinkActive]="['active']"  class="pcoded-hasalii" dropdown-icon="" subitem-icon="" appAccordionLink group="">
+                <a  (click)="openHotelMenu(1)" [routerLinkActive]="['active']" href="javascript:;" appAccordionToggle>
+                  <span class="pcoded-micon"><i class="ti-user"></i><b>T</b></span>
+                  <span class="pcoded-mtext">Manage Hotel</span>
+                  <span  style="float: right;font-size: 10px;padding-top: 10px;padding-left: 25px;" class="pcoded-micon"><i class="angle-change-1 ti-angle-right"></i></span>
+                </a>
+                <ul class="pcoded-submenu pcoded-hasali-1 run submenucustom"  style="display: none;">
+                    <li  *ngIf="permissions.hotel" class="">
+                        <a href="javascript:;" routerLink="/hotel" >
+                             <span class="pcoded-mtext" data-i18n="nav.dash.default">Hotels</span>
+                        </a>
+                    </li>
+                    <li *ngIf="permissions.hotelBooking" [routerLinkActive]="['active']">
+                        <a  href="javascript:;"  routerLink="/hotel-booking">
+                            <span class="pcoded-mtext" data-i18n="nav.dash.main">Manage Hotel Booking</span>
+                        </a>
+                    </li>
+                    <li *ngIf="permissions.restaurantBooking" [routerLinkActive]="['active']">
+                        <a  href="javascript:;"  routerLink="/restaurant-booking">
+                            <span class="pcoded-mtext" data-i18n="nav.dash.main">Manage Restaurant booking</span>
+                            <span class="pcoded-mcaret"></span>
+                        </a>
+                    </li>
+                    </ul>
+            </li>
+
+            <li  *ngIf="permissions.sightseeing" [routerLinkActive]="['active']"  class="pcoded-hasalii" dropdown-icon="" subitem-icon="" appAccordionLink group="">
+                <a  (click)="openHotelMenu(2)" [routerLinkActive]="['active']" href="javascript:;" appAccordionToggle>
+                  <span class="pcoded-micon"><i class="ti-user"></i><b>T</b></span>
+                  <span class="pcoded-mtext">Manage Sightseeing</span>
+                  <span  style="float: right;font-size: 10px;padding-top: 10px;padding-left: 25px;" class="pcoded-micon"><i class="angle-change-2 ti-angle-right"></i></span>
+                </a>
+                <ul class="pcoded-submenu pcoded-hasali-2 run submenucustom"  style="display: none;">
+                    <li>
+                        <a  href="javascript:;"  routerLink="/sightseeing">
+                            <span class="pcoded-mtext" data-i18n="nav.dash.main">Sightseeing</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a  href="javascript:;"  routerLink="/sight-booking">
+                            <span class="pcoded-mtext" data-i18n="nav.dash.main">Manage Sight Booking</span>
+                        </a>
+                    </li>
+                    </ul>
+            </li>
+
+            <!-- --->
+
+            <li  *ngIf="permissions.privatevehicle" [routerLinkActive]="['active']"  class="pcoded-hasalii" dropdown-icon="" subitem-icon="" appAccordionLink group="">
+                <a  (click)="openHotelMenu(3)" [routerLinkActive]="['active']" href="javascript:;" appAccordionToggle>
+                  <span class="pcoded-micon"><i class="ti-user"></i><b>T</b></span>
+                  <span class="pcoded-mtext">Private Hired</span>
+                  <span  style="float: right;font-size: 10px;padding-top: 10px;padding-left: 25px;" class="pcoded-micon"><i class="angle-change-3 ti-angle-right"></i></span>
+                </a>
+                <ul class="pcoded-submenu pcoded-hasali-3 run submenucustom"  style="display: none;">
+                    <li>
+                        <a  href="javascript:;" routerLink="/private-vehicle">
+                            <span class="pcoded-mtext" data-i18n="nav.dash.main">Private Vehicle</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a  href="javascript:;"  routerLink="/privatehired-booking">
+                            <span class="pcoded-mtext" data-i18n="nav.dash.main">Private Hired booking</span>
+                        </a>
+                    </li>
+                    </ul>
+            </li>
+
+            <li  *ngIf="permissions.deals" [routerLinkActive]="['active']"  class="pcoded-hasalii" dropdown-icon="" subitem-icon="" appAccordionLink group="">
+                <a  (click)="openHotelMenu(4)" [routerLinkActive]="['active']" href="javascript:;" appAccordionToggle>
+                  <span class="pcoded-micon"><i class="ti-user"></i><b>T</b></span>
+                  <span class="pcoded-mtext">Manage Deals</span>
+                  <span  style="float: right;font-size: 10px;padding-top: 10px;padding-left: 25px;" class="pcoded-micon"><i class="angle-change-4 ti-angle-right"></i></span>
+                </a>
+                <ul class="pcoded-submenu pcoded-hasali-4 run submenucustom"  style="display: none;">
+                    <li>
+                        <a  href="javascript:;" routerLink="/deals">
+                            <span class="pcoded-mtext" data-i18n="nav.dash.main">Deals</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a  href="javascript:;" routerLink="/deal-booking">
+                            <span class="pcoded-mtext" data-i18n="nav.dash.main">Deals Booking</span>
+                        </a>
+                    </li>
+
+                    </ul>
+            </li>
+
+
+            <!-- --->
+
+
+
+            <li *ngIf="permissions.customers" [routerLinkActive]="['active']">
+                <a  href="javascript:;"  routerLink="/customers">
+                    <span class="pcoded-micon"><i class="ti-star"></i><b>C</b></span>
+                    <span class="pcoded-mtext" data-i18n="nav.dash.main">Manage Customers</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li>
+            <li  [routerLinkActive]="['active']">
+                <a  href="javascript:;"  routerLink="/all-booking">
+                    <span class="pcoded-micon"><i class="ti-star"></i><b>C</b></span>
+                    <span class="pcoded-mtext" data-i18n="nav.dash.main">Manage Booking</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li>
+
+            
+
+            <li *ngIf="permissions.contactus" [routerLinkActive]="['active']">
+                <a href="javascript:;" routerLink="/contact-us">
+                    <span class="pcoded-micon"><i class="ti-mobile"></i><b>C</b></span>
+                    <span class="pcoded-mtext" data-i18n="nav.dash.main">Contact Us</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li>  
+            <li *ngIf="permissions.subscriptions" [routerLinkActive]="['active']">
+                <a href="javascript:;" routerLink="/subscription">
+                    <span class="pcoded-micon"><i class="ti-star"></i><b>S</b></span>
+                    <span class="pcoded-mtext" data-i18n="nav.dash.main">Manage Packages</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li>
+            <li *ngIf="permissions.content" [routerLinkActive]="['active']">
+                <a href="javascript:;" routerLink="/content">
+                    <span class="pcoded-micon"><i class="ti-star"></i><b>S</b></span>
+                    <span class="pcoded-mtext" data-i18n="nav.dash.main">Manage Contents</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+            </li> 
+
+        </ul>
+    </div>
+</nav>

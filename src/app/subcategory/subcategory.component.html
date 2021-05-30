@@ -1,0 +1,350 @@
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <app-sidebar></app-sidebar>
+        <div class="pcoded-content bg-white">
+            <div class="pcoded-inner-content">
+                <!-- Main-body start -->
+                <div class="main-body">
+                    <div class="page-wrapper pb-0">
+                        <!-- Page-header start -->
+                        <div class="page-header card bg-transparent box-shadow-none">
+                            <div class="row align-items-end">
+                                <div class="col-lg-8">
+                                    <div class="page-header-title">
+                                        <div class="d-inline">
+                                            <h4 class="mt-3">{{paramCategoryName}} Private Vehicle <span class="dot"></span> <small
+                                                    class="dot-number">{{this.rows ? this.rows.length : ""}}
+                                                </small>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button  (click)="cm()" data-toggle="modal" data-target="#createModal"
+                                    class="btn btn-round btn-warning btn-outline-warning btn-orange">CREATE
+                                    PRIVATE VEHICLE</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Page-header end -->
+                    <!-- Page-body start -->
+                    <div class="page-wrapper pt-0">
+                        <!-- Basic table card start -->
+                        <input type="text" class="form-control col-lg-4 "
+                            placeholder="Type to filter the name column..." (keyup)="updateFilter($event)" />
+                        <p>&nbsp; </p>
+                        <div class="card">
+                            <div class="card-block table-border-style p-3 pt-4">
+                                <div class="table-responsive">
+                                    <ngx-datatable #myTable class="dark" [rows]="rows" [columnMode]="'force'"
+                                        [headerHeight]="50" [footerHeight]="50" [rowHeight]="120" [scrollbarH]="true"
+                                        [sorts]="[{prop: 'name', dir: 'desc'},{prop: 'shortDesc', dir: 'desc'}]">
+
+                                        <ngx-datatable-column  name="Name">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <a data-toggle="modal" data-target="#viewModal" (click)="viewSingle(row.private_hired_id)" href="javascript:;"> {{row.name}} </a> 
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Description" >
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.description}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Image">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <img [src] = "getImg(row.images)"  height="70px" width="90px" /> 
+                                            </ng-template>
+
+                                    </ngx-datatable-column>
+
+                                        <ngx-datatable-column name="Number of seats" >
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.number_of_seat}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Type">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.type}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Action">
+                                            <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                                                <a href="" class="action-btn" [routerLink]="[]"
+                                                    (click)="editForm(row.private_hired_id, rowIndex)" data-toggle="modal"
+                                                    data-target="#createModal"><i class="fa fa-edit"></i></a>
+                                                &nbsp;
+                                                <a class="action-btn" [routerLink]="[]" (click)="deleteForm(row.private_hired_id)"
+                                                    data-toggle="modal" data-target="#deleteModal"><i
+                                                        class="fa fa-trash"></i></a>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-footer>
+                                            <ng-template 
+                                              ngx-datatable-footer-template
+                                              let-rowCount="rowCount"
+                                              let-pageSize="pageSize"
+                                              let-selectedCount="selectedCount"
+                                              let-curPage="curPage"
+                                              let-offset="offset"
+                                              let-isVisible="isVisible">
+                                                <div class="page-count">
+                                                </div>
+                                                <datatable-pager
+                                                    [pagerLeftArrowIcon]="'datatable-icon-left'"
+                                                    [pagerRightArrowIcon]="'datatable-icon-right'"
+                                                    [pagerPreviousIcon]="'datatable-icon-prev'"
+                                                    [pagerNextIcon]="'datatable-icon-skip'"
+                                                    [page]="1"
+                                                    [size]="perPage"
+                                                    [count]="totalElements"
+                                                    [hidden]="!((totalElements / perPage) > 1)"
+                                                    (change)="pageChange($event)">
+                                                </datatable-pager>
+                                            </ng-template>
+                                          </ngx-datatable-footer>
+
+                                    </ngx-datatable>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Basic table card end -->
+                    </div>
+                    <!-- Page-body end -->
+                </div>
+            </div>
+            <!-- Main-body end -->
+
+            <div id="styleSelector">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="createModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center">{{action}} Private Vehicle</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col-lg-6">
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="name" id="name" [(ngModel)]="name">
+                    </div>
+                    <div class="col-lg-6" >
+                        <label>Number of seat</label>
+                        <input type="text" class="form-control" name="numberOfSeats" id="numberOfSeats" [(ngModel)]="numberOfSeats">
+    
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control"  rows="3" name="description" id="description"
+                        [(ngModel)]="description"></textarea>
+                </div>
+                <div   class="" style="width:80%;">
+
+                    <h1 class="section-heading mt-0 mb-0">Photos</h1>
+                    <label class="custom-classes-label">Upload an UNLIMITED number of photos per listing. We
+                      accept jpg, jpeg, and png
+                      files.</label>
+                    <ngx-dropzone (change)="onImageSelect($event)">
+                      <ngx-dropzone-label>DRAG AND DROP OR CLICK TO SELECT</ngx-dropzone-label>
+                    </ngx-dropzone>
+                    <span *ngIf="showLoader">
+                      <div class="spinner-border text-dark"></div>
+                    </span>
+                    <div class="floatingimage" *ngFor="let photo of images; let i=index"
+                       >
+                      <img src="{{photo.image}}"  style="padding-top: 10px;padding-bottom: 10px;" height="100" width="100" />
+                       <span title="Remove" (click)="removeRecource(i)"
+                        class="close"></span>
+
+                    </div>
+                  </div>
+                  <p>&nbsp;</p>
+
+                <div class="form-group row">
+                    <div class="col-lg-6" >
+                        <label>Type</label>
+                        <input type="text" class="form-control" name="type" id="type" [(ngModel)]="type">
+           
+                    </div>
+                    <div class="col-lg-6" >
+                        <label>Per day Rate</label>
+                        <input type="text" class="form-control" name="perDayRate" id="perDayRate" [(ngModel)]="perDayRate">
+    
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-4" >
+                        <label>Fuel</label>
+                        <input type="checkbox" class="form-control checkbox-margin" name="fuel" id="fuel" [(ngModel)]="fuel">
+    
+                    </div>
+                    <div class="col-lg-4" >
+                        <label>Driver required</label>
+                        <input type="checkbox" class="form-control checkbox-margin" name="driverRequired" id="driverRequired" [(ngModel)]="driverRequired">
+    
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" [disabled]="saveDisabled"   class="btn btn-outline-warning" (click)="onSubmit()">{{btn}} &nbsp; <span *ngIf="saveDisabled" class="pcoded-micon"><i class="ti-reload rotate-refresh"></i></span></button>
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Are you sure?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Do you really want to delete these records? This process cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" (click)="deleteSubcategory()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center">Edit Subcategory</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" *ngIf="viewOption === 'subcategory'">
+                    <label>
+                        Select Category
+                    </label>
+                    <select id="categoryIdE" name="categoryIdE" [(ngModel)]="categoryIdE" class="form-control">
+                        <option value="null">
+                            Select Category
+                        </option>
+                        <ng-container *ngFor="let category of categories">
+                            <option value="{{category._id}}">{{category.name}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Subcategory Name</label>
+                    <input type="text" class="form-control" name="nameE" id="nameE" [(ngModel)]="nameE">
+                </div>
+                <div class="form-group">
+                    <label>Short Desc</label>
+                    <input type="shortDescE" class="form-control" name="shortDescE" id="shortDescE"
+                        [(ngModel)]="shortDescE">
+                </div>
+                <div class="form-group">
+                    Classification &nbsp;
+                    <label class="switch">
+                        <input type="checkbox" [(ngModel)]="isClassificationE">
+                        <span class="slider round" ></span>
+                    </label>
+                </div>
+                <ng-container *ngIf="isClassificationE"> 
+                    <form [formGroup]="productFormE" (ngSubmit)="onSubmitEdit()">
+
+                        <table class="table table-bordered" formArrayName="quantitiesE">
+                          <tr>
+                            <th colspan="2">Add Classification:</th>
+                            <th width="150px"><button type="button" (click)="addQuantityE()" class="btn btn-primary">Add More</button></th>
+                          </tr>
+                          <tr *ngFor="let quantity of quantitiesE().controls; let i=index" [formGroupName]="i">
+                            <td>
+                                Name :
+                                <input type="text" formControlName="name" class="form-control">
+                            </td>
+                            <td>
+                                Type:
+                                <input type="text" formControlName="type" placeholder="checkbox/radio button" class="form-control">
+                            </td>
+                            <td>
+                                <button (click)="removeQuantityE(i)" class="btn btn-danger">Remove</button>
+                            </td>
+                          </tr>
+                        </table>
+                      </form>                                
+                </ng-container>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-warning" (click)="onSubmitEdit()">Submit</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="viewModal" class="modal fade">
+    <div class="modal-dialog modal-confirm modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">View Details</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-responsive table-striped" >
+
+                <tr>
+                    <th>
+                           Key  
+                    </th>
+                    <th>
+                        Value
+                    </th>
+
+                </tr>
+                <ng-container  *ngFor="let view of viewData">
+                    <tr>
+                        <td>
+                           <b>{{view.newkey}} </b> 
+                        </td>
+                        <td>
+                            {{view.value}}
+                        </td>
+    
+                    </tr>
+    
+                </ng-container>
+                <ng-container  *ngIf="showImages.length > 0">
+                    <tr>
+                        <th colspan="2" >Images</th>
+                    </tr>
+                        <tr *ngFor="let img of showImages" >
+                            <th  colspan="2" >
+                                    <img height="100" width="130" src="{{imgBase}}{{img}}" />
+                            </th>
+
+                        </tr>
+                </ng-container>
+
+            </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

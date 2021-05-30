@@ -1,0 +1,195 @@
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <app-sidebar></app-sidebar>
+        <div class="pcoded-content bg-white">
+            <div class="pcoded-inner-content">
+                <!-- Main-body start -->
+                <div class="main-body">
+                    <div class="page-wrapper pb-0">
+                        <!-- Page-header start -->
+                        <div class="page-header card bg-transparent box-shadow-none">
+                            <div class="row align-items-end">
+                                <div class="col-lg-8">
+                                    <div class="page-header-title">
+                                        <div class="d-inline">
+                                            <h4 class="mt-3">Orders <span class="dot"></span> <small
+                                                    class="dot-number">{{this.rows ? this.rows.length : ""}}
+                                                </small></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Page-header end -->
+                    <!-- Page-body start -->
+                    <div class="page-wrapper pt-0">
+                        <!-- Basic table card start -->
+
+                        <!-- Basic table card start -->
+                        <input type="text" class="form-control col-lg-4 "
+                            placeholder="Type to filter the name column..." (keyup)="updateFilter($event)" />
+                        <p>&nbsp; </p>
+                        <div class="card">
+                            <div class="card-block table-border-style p-3 pt-4">
+                                <div class="table-responsive">
+                                    <ngx-datatable #myTable class="dark" [rows]="rows" [columnMode]="'force'"
+                                        [headerHeight]="50" [footerHeight]="50" [rowHeight]="120" [scrollbarH]="true"
+                                        [sorts]="[{prop: 'orderId', dir: 'desc'}, {prop: 'restaurantId.name', dir: 'desc'}]">
+                                        <ngx-datatable-column name="Order Id">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.orderId}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Customer Name">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.customerId.firstName}} {{row.customerId.lastName}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Restaurant Name">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.restaurantId.name}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column name="Placed On">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.createdDate | date:'medium'}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column name="Total Price">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                {{row.totalPrice}}
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Detail">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <a class="action-btn" [routerLink]="[]" (click)="orderItems(row._id)"
+                                                    data-toggle="modal" data-target="#itemModal">View</a>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+
+                                        <ngx-datatable-column name="Status">
+                                            <ng-template let-row="row" ngx-datatable-cell-template>
+                                                <select [(ngModel)]="row.status"  class="selectpicker" data-dropup-auto="false" data-size="5"
+                                                    (change)="changeStatus(row._id, $event)">
+                                                    <option value="null">Status</option>
+                                                    <option value="pending">Pending</option>
+                                                    <option value="accept">Accept</option>
+                                                    <option value="reject">Reject</option>
+                                                    <option value="cancelled">Cancelled</option>
+                                                    <option value="delivered">Delivered</option>
+                                                    <option value="expired">Expired</option>
+                                                </select>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                        <ngx-datatable-column name="Action">
+                                            <ng-template let-row="row" let-i="index" ngx-datatable-cell-template>
+                                                <!-- <a href="" class="action-btn" [routerLink]="[]"
+                                                                    (click)="editForm(row._id, i)"
+                                                                    data-toggle="modal" data-target="#editModal"><i
+                                                                            class="fa fa-edit"></i></a> -->
+                                                &nbsp;
+                                                <a class="action-btn" [routerLink]="[]" (click)="deleteForm(row._id)"
+                                                    data-toggle="modal" data-target="#deleteModal"><i
+                                                        class="fa fa-trash"></i></a>
+                                            </ng-template>
+                                        </ngx-datatable-column>
+                                    </ngx-datatable>
+                                    <!-- <table class="table table-custom">
+                                        <thead>
+                                            <tr>
+                                                <th>Customer Name</th>
+                                                <th>Restaurant Name</th>
+                                                <th>Order Details</th>
+                                                <th>Discount</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let order of this.orders;index as i;">
+                                                <td>{{order.customer_info[0].firstName}} {{order.customer_info[0].lastName}}</td>
+                                                <td>Nandos</td>
+                                                <td>{{order.orderDetails}}</td>
+                                                <td>{{order.discount}}</td>
+                                                <td>
+                                                    <label class="switch">
+                                                        <input type="checkbox" [checked]="order.status==='active'" (change)="changeStatus(order._id, $event)">
+                                                        <span class="slider round"></span>
+                                                    </label>                                                   
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:;" class="action-btn"><i
+                                                        class="fa fa-edit"></i></a>
+                                                    &nbsp;
+                                                    <a [routerLink]="[]" (click)="openModal(order._id)" class="action-btn"><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="!orders.length">
+                                                <td colspan="10" class="text-center">No record found</td>
+                                            </tr>
+                                        </tbody>
+                                    </table> -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Basic table card end -->
+                    </div>
+                    <!-- Page-body end -->
+                </div>
+            </div>
+            <!-- Main-body end -->
+
+            <div id="styleSelector">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="deleteModal" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Are you sure?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Do you really want to delete these records? This process cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" (click)="deleteOrder()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="itemModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center">Items</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group row" *ngFor="let item of this.items">
+                    <div class="col-lg-4">
+                        <div>{{item.name}}</div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div>Qty: {{item.quantity}}</div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div>Price: {{item.price}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
